@@ -35,4 +35,24 @@ AuthorSchema.virtual("dateOfDeath").get(function () {
   );
 });
 
+AuthorSchema.virtual("lifeSpan").get(function () {
+  let dob = DateTime.fromJSDate(this.date_of_birth).toLocaleString(
+    DateTime.DATE_MED
+  );
+  ("Unknown");
+  let dod = DateTime.fromJSDate(this.date_of_death).toLocaleString(
+    DateTime.DATE_MED
+  );
+  ("Unknown");
+
+  if (dob === "Invalid DateTime") {
+    dob = "Unknown";
+  }
+  if (dod === "Invalid DateTime") {
+    dod = "Unknown";
+  }
+
+  return `${dob} - ${dod}`;
+});
+
 module.exports = mongoose.model("Author", AuthorSchema);
