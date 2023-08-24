@@ -30,4 +30,11 @@ exports.index = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.book_list = asyncHandler(async (req, res, next) => {});
+exports.book_list = asyncHandler(async (req, res, next) => {
+  const allBooks = await Book.find({}, "title author")
+    .sort({ title: 1 })
+    .populate("author")
+    .exec();
+
+  res.render("bookList", { title: "Book list", bookList: allBooks });
+});

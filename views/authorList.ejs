@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <% for(let author of authorList){ %>
+
+    <li>
+      <a href="<%= author.url %>"><%= author.name %></a>
+      <span>(<%= author.dateOfBirth %>) - (<%= author.dateOfDeath %>)</span>
+    </li>
+
+    <% } %>
+  </body>
+</html>

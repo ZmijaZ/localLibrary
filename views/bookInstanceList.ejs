@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <ul>
+      <% for(let book of bookInstanceList) { %>
+
+      <li><a href="<%= book.url %>"><%= book.book.title %></a></li>
+
+      <span><%= book.imprint %></span>
+      <% if(book.status != "Available"){ %>
+      <span> <strong>DUE:</strong> <%= book.dueBackFormatted %></span>
+      <% } %> <% } %>
+    </ul>
+  </body>
+</html>
