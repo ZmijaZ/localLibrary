@@ -2,10 +2,22 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <p>The library has the following record counts:</p>
+
+    <ul>
+      <li><strong>Books: <%= bookCount %></strong></li>
+      <li><strong>Copies: <%= bookInstanceCount %></strong></li>
+      <li>
+        <strong>Copies avaliable: <%= bookInstanceAvailableCount %></strong>
+      </li>
+      <li><strong>Authors: <%= authorCount %></strong></li>
+      <li><strong>Genres: <%= genreCount %></strong></li>
+    </ul>
   </body>
 </html>
