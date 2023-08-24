@@ -38,3 +38,22 @@ exports.book_list = asyncHandler(async (req, res, next) => {
 
   res.render("bookList", { title: "Book list", bookList: allBooks });
 });
+
+exports.book_detail = asyncHandler(async (req, res, next) => {
+  const [book, instancesOfBook] = await Promise.all([
+    Book.findById(req.params.id).populate("author").populate("genre").exec(),
+    BookInstance.find({ book: req.params.id }).exec(),
+  ]);
+
+  if (book === null) {
+    const err = new Error("Book not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("bookDetail", {
+    title: "Book detail",
+    book: book,
+    bookInstances: instancesOfBook,
+  });
+});

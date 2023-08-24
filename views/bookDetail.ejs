@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1>Book: <%= book.title %></h1>
+
+    <p>
+      <strong
+        >Author: <a href="<%= book.author.url %>"><%= book.author.name %></a>
+      </strong>
+    </p>
+    <p><strong>Summary:<%= book.author.name %></strong></p>
+    <p><strong>ISBN:<%= book.isbn %></strong></p>
+    <p>
+      <strong>
+        Genre: <% for (let genre in book.genre){ %>
+        <a href="<%= genre.url %>"><%= genre.name %></a>
+
+        <% } %>
+      </strong>
+    </p>
+
+    <dl>
+      <h3>Copies</h3>
+      <% for(let instance of bookInstances) {%>
+      <hr />
+      <p>Status: <%= instance.status %></p>
+      <a href="<%= instance.url %>"><%= instance._id %></a>
+
+      <% } %>
+    </dl>
+  </body>
+</html>

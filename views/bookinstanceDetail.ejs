@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1>ID: <%= bookInstance._id %></h1>
+
+    <p>
+      <strong>
+        Title:<a href="<%= bookInstance.book.url %>">
+          <%= bookInstance.book.title %></a
+        >
+      </strong>
+    </p>
+    <p><strong>Imprint:<%= bookInstance.imprint %></strong></p>
+    <p><strong>Status: <%= bookInstance.status %></strong></p>
+
+    <% if(bookInstance.status != "Available") {%>
+    <p><strong>Due back: <%= bookInstance.due_back %></strong></p>
+
+    <% } %>
+  </body>
+</html>
