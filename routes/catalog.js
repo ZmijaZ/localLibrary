@@ -11,5 +11,6 @@ router.get("/", bookController.index);
 router.get("/books", bookController.book_list);
 router.get("/book-instances", bookinstanceController.bookinstance_list);
 router.get("/authors", authorController.author_list);
+router.get("/genres", genreController.genre_list);
 
 module.exports = router;
