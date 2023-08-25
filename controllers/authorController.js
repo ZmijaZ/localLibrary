@@ -133,3 +133,82 @@ exports.author_delete_post = asyncHandler(async (req, res, next) => {
     res.redirect("/catalog/authors");
   }
 });
+
+exports.author_update_get = asyncHandler(async (req, res, next) => {
+  const author = await Author.findById(req.params.id);
+
+  if (author === null) {
+    const error = new Error("Author not found");
+    error.status = 404;
+    return next(err);
+  }
+
+  res.render("authorForm", {
+    title: "Update author",
+    author: author,
+    errors: [],
+  });
+});
+
+exports.author_update_post = [
+  body("firstName")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("First name must be specified.")
+    .isAlphanumeric()
+    .withMessage("First name has non-alphanumeric characters."),
+  body("familyName")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Family name must be specified.")
+    .isAlphanumeric()
+    .withMessage("Family name has non-alphanumeric characters."),
+  body("DOB", "Invalid date of birth")
+    .optional({ values: "falsy" })
+    .isISO8601()
+    .toDate(),
+  body("DOD", "Invalid date of death")
+    .optional({ values: "falsy" })
+    .isISO8601()
+    .toDate(),
+
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create Author object with escaped and trimmed data
+    let name = req.body.firstName;
+    console.log(name);
+    const author = new Author({
+      first_name: req.body.firstName,
+      family_name: req.body.familyName,
+      date_of_birth: req.body.DOB,
+      date_of_death: req.body.DOD,
+      _id: req.params.id, //OBAVEZNO <----------------------------------!!!
+    });
+    console.log(author);
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/errors messages.
+      res.render("authorForm", {
+        title: "Create Author",
+        author: author,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid.
+
+      // Save author.
+      const updatedAuthor = await Author.findByIdAndUpdate(
+        req.params.id,
+        author,
+        {}
+      );
+      // Redirect to new author record.
+      res.redirect(updatedAuthor.url);
+    }
+  }),
+];

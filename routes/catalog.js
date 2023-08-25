@@ -45,6 +45,22 @@ router.post(
 );
 router.get("/genre/:id/delete", genreController.genre_delete_get);
 
+//updating
+router.get("/book/:id/update", bookController.book_update_get);
+router.post("/book/:id/update", bookController.book_update_post);
+router.get("/author/:id/update", authorController.author_update_get);
+router.post("/author/:id/update", authorController.author_update_post);
+router.get(
+  "/bookinstance/:id/update",
+  bookinstanceController.bookinstance_update_get
+);
+router.post(
+  "/bookinstance/:id/update",
+  bookinstanceController.bookinstance_update_post
+);
+router.get("/genre/:id/update", genreController.genre_update_get);
+router.post("/genre/:id/update", genreController.genre_update_post);
+
 //detail
 router.get("/genre/:id", genreController.genre_detail);
 router.get("/author/:id", authorController.author_detail);
