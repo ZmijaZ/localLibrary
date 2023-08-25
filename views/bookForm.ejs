@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action="" method="post">
+      <label for="title">Title : </label>
+      <input
+        type="text"
+        placeholder="Title"
+        name="title"
+        value="<%= undefined === book ? '' : book.title %>"
+      />
+      <label for="author">Author: </label>
+      <select name="author" placeholder="Select author" required>
+        <% for(let author of authors){ %>
+        <option value="<%= author._id %>"><%= author.name %></option>
+        <% } %>
+      </select>
+      <label for="summary">Summary: </label>
+      <input
+        type="text"
+        placeholder="Summary"
+        name="summary"
+        value="<%= undefined === book ? '' : book.summary %>"
+      />
+      <label for="isbn">ISBN:</label>
+      <input
+        type="text"
+        placeholder="ISBN"
+        name="isbn"
+        value="<%= undefined === book ? '' : book.isbn %>"
+      />
+      <label for="genre">Genre: </label>
+      <% for(let genre of genres){ %>
+      <input
+        type="checkbox"
+        name="genre"
+        id="<%= genre._id %>"
+        value="<%= genre._id %>"
+        checked="<%= genre.checked %>"
+      />
+      <label for="<%= genre._id %>"><%= genre.name %></label>
+      <% } %>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <% if(errors) {%>
+    <ul>
+      <% for(let error of errors){ %>
+
+      <li><%= error.msg %></li>
+      <% } %> <% } %>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action="" method="post">
+      <label for="name">Genre: </label>
+      <input
+        type="text"
+        placeholder="Fantasy, Poetry, etc."
+        name="name"
+        value="<%= undefined === genre ? '' : genre.name %>"
+      />
+      <button type="submit">Submit</button>
+    </form>
+
+    <% if(errors) {%>
+    <ul>
+      <% for(let error of errors){ %>
+
+      <li><%= error.msg %></li>
+      <% } %> <% } %>
+    </ul>
+  </body>
+</html>

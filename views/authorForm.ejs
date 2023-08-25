@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action="" method="post">
+      <label for="firstName">First Name: </label>
+      <input
+        type="text"
+        placeholder="First name"
+        name="firstName"
+        value="<%= undefined === author ? '' : author.first_name %>"
+        id="firstName"
+      />
+      <label for="familyName">Family Name: </label>
+      <input
+        type="text"
+        placeholder="Family name"
+        name="familyName"
+        value="<%= undefined === author ? '' : author.family_name %>"
+      />
+      <label for="DOB">Date of birth: </label>
+      <input
+        type="date"
+        placeholder="Date of birth"
+        name="DOB"
+        value="<%= undefined === author ? '' : author.date_of_birth %>"
+      />
+      <label for="DOD">Date of death: </label>
+      <input
+        type="date"
+        placeholder="Date of death"
+        name="DOD"
+        value="<%= undefined === author ? '' : author.date_of_death %>"
+      />
+      <button type="submit">Submit</button>
+    </form>
+
+    <% if(errors) {%>
+    <ul>
+      <% for(let error of errors){ %>
+
+      <li><%= error.msg %></li>
+      <% } %> <% } %>
+    </ul>
+  </body>
+</html>

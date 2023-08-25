@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action="" method="post">
+      <label for="title">Book : </label>
+
+      <select type="select" name="book" placeholder="Select book" required>
+        <% for(let book of bookList) { %>
+        <option value="<%= book._id %>"><%= book.title %></option>
+        <% } %>
+      </select>
+
+      <label for="title">Imprint: </label>
+      <input
+        type="text"
+        placeholder="Publisher and date information"
+        name="imprint"
+        required
+        value="<%= undefined === bookinstance ? '' : bookinstance.imprint %>"
+      />
+      <label for="due_back">Date when book available: </label>
+      <input
+        type="date"
+        placeholder="Due back"
+        name="due_back"
+        value="<%= undefined === bookinstance ? '' : bookinstance.due_back %>"
+      />
+
+      <label for="status">Status: </label>
+      <select placeholder="Select status" name="status" required>
+        <option value="Maintenance">Maintenance</option>
+        <option value="Available">Available</option>
+        <option value="Loaned">Loaned</option>
+        <option value="Reversed">Reversed</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <% if(errors) {%>
+    <ul>
+      <% for(let error of errors){ %>
+
+      <li><%= error.msg %></li>
+      <% } %> <% } %>
+    </ul>
+  </body>
+</html>

@@ -2,6 +2,8 @@ const Author = require("../models/authorModel");
 const Book = require("../models/bookModel");
 const asyncHandler = require("express-async-handler");
 
+const { body, validationResult } = require("express-validator");
+
 //use exports.function because I have a lot functions to export from the file
 
 exports.author_list = asyncHandler(async (req, res, next) => {
@@ -31,3 +33,67 @@ exports.author_detail = asyncHandler(async (req, res, next) => {
     authorBooks: booksByAuthor,
   });
 });
+
+exports.author_create_get = (req, res, next) => {
+  res.render("authorForm", { title: "Create Author", author: {}, errors: [] });
+};
+
+exports.author_create_post = [
+  // Validate and sanitize fields.
+  body("firstName")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("First name must be specified.")
+    .isAlphanumeric()
+    .withMessage("First name has non-alphanumeric characters."),
+  body("familyName")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Family name must be specified.")
+    .isAlphanumeric()
+    .withMessage("Family name has non-alphanumeric characters."),
+  body("DOB", "Invalid date of birth")
+    .optional({ values: "falsy" })
+    .isISO8601()
+    .toDate(),
+  body("DOD", "Invalid date of death")
+    .optional({ values: "falsy" })
+    .isISO8601()
+    .toDate(),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create Author object with escaped and trimmed data
+    let name = req.body.firstName;
+    console.log(name);
+    const author = new Author({
+      first_name: req.body.firstName,
+      family_name: req.body.familyName,
+      date_of_birth: req.body.DOB,
+      date_of_death: req.body.DOD,
+    });
+    console.log(author);
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/errors messages.
+      res.render("authorForm", {
+        title: "Create Author",
+        author: author,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid.
+
+      // Save author.
+      await author.save();
+      // Redirect to new author record.
+      res.redirect(author.url);
+    }
+  }),
+];
