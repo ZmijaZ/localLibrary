@@ -88,3 +88,23 @@ exports.bookinstance_create_post = [
     }
   }),
 ];
+
+exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
+  const bookinstance = await BookInstance.findById(req.params.id);
+
+  if (bookinstance === null) {
+    res.redirect("/catalog/book-instances");
+  }
+
+  res.render("deleteBookinstance", {
+    title: "Delete book instance",
+    bookinstance: bookinstance,
+  });
+});
+
+exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
+  // const [bookinstance] = await BookInstance.find(req.params.id);
+
+  await BookInstance.findByIdAndDelete(req.body.bookinstanceid).exec();
+  res.redirect("/catalog/book-instances");
+});

@@ -16,12 +16,11 @@
     <p><strong>Summary:<%= book.author.name %></strong></p>
     <p><strong>ISBN:<%= book.isbn %></strong></p>
     <p>
-      <strong>
-        Genre: <% for (let genre in book.genre){ %>
-        <a href="<%= genre.url %>"><%= genre.name %></a>
+      <strong> Genre:</strong>
+      <% for (let genre of book.genre){ %>
+      <a href="<%= genre.url %>"> <%= genre.name %> </a>
 
-        <% } %>
-      </strong>
+      <% } %>
     </p>
 
     <dl>
@@ -33,5 +32,7 @@
 
       <% } %>
     </dl>
+
+    <p><a href="<%= book.url %>/delete">Delete book</a></p>
   </body>
 </html>

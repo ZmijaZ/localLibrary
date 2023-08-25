@@ -63,3 +63,39 @@ exports.genre_create_post = [
     }
   }),
 ];
+
+exports.genre_delete_get = asyncHandler(async (req, res, next) => {
+  const [genre, booksOfGenre] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    Book.find({ genre: req.params.id }).exec(),
+  ]);
+
+  if (genre === null) {
+    res.redirect("/catalog/genres");
+  }
+
+  res.render("genreDelete", {
+    title: "Delete genre",
+    genre: genre,
+    booksOfGenre: booksOfGenre,
+  });
+});
+
+exports.genre_create_post = asyncHandler(async (req, res, next) => {
+  const [genre, booksOfGenre] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    Book.find({ genre: req.params.id }).exec(),
+  ]);
+
+  if (booksOfGenre.length > 0) {
+    res.render("genreDelete", {
+      title: "Delete genre",
+      genre: genre,
+      booksOfGenre: booksOfGenre,
+    });
+    return;
+  } else {
+    await Genre.findByIdAndDelete(req.body.genreid).exec();
+    res.redirect("/catalog/genres");
+  }
+});
